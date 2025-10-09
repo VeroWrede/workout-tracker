@@ -1,6 +1,11 @@
 import './WorkoutCard.css'
 
-function WorkoutCard({ workout }) {
+function WorkoutCard({ workout, onDelete }) {
+  const handleDelete = () => {
+    if (window.confirm(`Delete ${workout.exerciseName}? This cannot be undone.`)) {
+      onDelete(workout.id)
+    }
+  }
   return (
     <div className="workout-card">
       <div className='Workout-card-header'>
@@ -26,10 +31,12 @@ function WorkoutCard({ workout }) {
       </div>
 
       <div className="workout-card-footer">
-        <span className="date">📅 {workout.date}</span>
+        <span className="date">{workout.date}</span>
+      </div>
+      <div className='card-actions'>
+        <button className='delete-btn' onClick={handleDelete}>Delete</button>
       </div>
     </div>
-
   )
 }
 
