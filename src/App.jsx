@@ -3,10 +3,11 @@ import './App.css'
 import ExerciseForm from './Components/ExerciseForm'
 import FilterSort from './Components/FilterSort'
 import WorkoutList from './Components/WorkoutList'
+import { mockWorkouts } from './mockData'
 
 function App() {
   // use State to store workouts for now
-  const [workouts, setWorkouts] = useState([])
+  const [workouts, setWorkouts] = useState(mockWorkouts)
 
   // add new workout
   const addWorkout = (workoutData) => {
@@ -15,13 +16,16 @@ function App() {
       id: Date.now(),
       ...workoutData
     }
-
     // add new WO to curr storage
     setWorkouts(prevWorkouts => [...prevWorkouts, newWO])
-
     console.log('WO added to state: ', newWO)
   }
 
+  const deleteWorkout = (id) => {
+    setWorkouts(prevWorkouts => prevWorkouts.filter(workout => workout.id !== id))
+    console.log(`WO with ID ${id} has been deleted`)
+  }
+ 
   return (
     <div className="App">
       <header>
@@ -30,14 +34,12 @@ function App() {
       </header>
       
       <main>
-        {/* Form to add new exercises */}
         <ExerciseForm onAddWorkout={addWorkout} />
 
         {/* Filter and sort controls */}
         <FilterSort />
 
-        {/* List of all workouts */}
-        <WorkoutList workouts={workouts}/>
+        <WorkoutList workouts={workouts} onDeleteWorkout={deleteWorkout}/>
       </main>
 
       <footer>
