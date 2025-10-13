@@ -23,8 +23,8 @@
 }
 
 /* Optional: Show 2 columns on larger screens */
-@media (min-width: 900px) {
+/* @media (min-width: 900px) {
   .workout-list {
     grid-template-columns: repeat(2, 1fr);
   }
-}
+} */

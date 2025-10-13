@@ -6,8 +6,11 @@ import WorkoutList from './Components/WorkoutList'
 import { mockWorkouts } from './mockData'
 
 function App() {
-  // use State to store workouts for now
+  // use State to store mock workouts for now
   const [workouts, setWorkouts] = useState(mockWorkouts)
+
+  // track workout for editing
+  const [editingWorkout, setEditingWorkout] = useState(null)
 
   // add new workout
   const addWorkout = (workoutData) => {
@@ -25,6 +28,28 @@ function App() {
     setWorkouts(prevWorkouts => prevWorkouts.filter(workout => workout.id !== id))
     console.log(`WO with ID ${id} has been deleted`)
   }
+
+  // edit WO
+  const updateWorkout = (id, updatedData) => {
+    setWorkouts(prevWorkouts =>
+      prevWorkouts.map(workout =>
+        workout.id ===id ? { ...workout, ...updatedData } : workout
+      )
+    )
+    // close editor
+    setEditingWorkout(null)
+    console.log(`Workout with ID ${id} has been updated`)
+  } 
+
+  // trigger editor
+  const startEditing = (workout) => {
+    setEditingWorkout(workout)
+  }
+
+  // cancel editing
+  const cancelEditing = () => {
+    setEditingWorkout(null)
+  }
  
   return (
     <div className="App">
@@ -39,7 +64,14 @@ function App() {
         {/* Filter and sort controls */}
         <FilterSort />
 
-        <WorkoutList workouts={workouts} onDeleteWorkout={deleteWorkout}/>
+        <WorkoutList 
+          workouts={workouts} 
+          onDeleteWorkout={deleteWorkout}
+          onEditWorkout={startEditing}
+          editingWorkout={editingWorkout}
+          onUpdateWorkout={updateWorkout}
+          onCancelEdit={cancelEditing}
+        />
       </main>
 
       <footer>

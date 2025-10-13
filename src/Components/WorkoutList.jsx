@@ -1,7 +1,14 @@
 import WorkoutCard from './WorkoutCard'
 import './WorkoutList.css'
 
-function WorkoutList({ workouts, onDeleteWorkout }) {
+function WorkoutList({ 
+  workouts, 
+  onDeleteWorkout,
+  onEditWorkout,
+  editingWorkout,
+  onUpdateWorkout,
+  onCancelEdit
+ }) {
   // check if there are workouts
   if(workouts.length === 0) {
     return (
@@ -20,6 +27,10 @@ function WorkoutList({ workouts, onDeleteWorkout }) {
             key={workout.id} 
             workout={workout} 
             onDelete={onDeleteWorkout}
+            onEdit={onEditWorkout}
+            isEditing={editingWorkout?.id === workout.id}
+            onUpdate={onUpdateWorkout}
+            onCancelEdit={onCancelEdit}
           />
         ))}
       </div>
