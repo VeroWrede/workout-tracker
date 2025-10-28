@@ -1,195 +1,125 @@
 import { useState } from 'react'
 import './WorkoutCard.css'
 
-function WorkoutCard({ 
-  workout, 
+function WorkoutCard({
+  workout,
   onDelete,
-  onEdit,
-  isEditing,
+  onSelect,
+  selectedWorkout,
   onUpdate,
-  onCancelEdit 
+  onClose
 }) {
-  // use state for edit data
-  const [editData, setEditData] = useState({
-    exerciseName: workout.exerciseName,
-    sets: workout.sets,
-    reps: workout.reps,
-    weight: workout.weight,
-    muscleGroup: workout.muscleGroup,
-    date: workout.date
-  })
+  
+  const handleEdit = () => {
+    onUpdate(workout.id)
+  }
 
   const handleDelete = () => {
-    if (window.confirm(`Delete ${workout.exerciseName}? This cannot be undone.`)) {
+    if (window.confirm(`Delete workout from ${workout.date}? This cannot be undone.`)) {
       onDelete(workout.id)
     }
   }
 
-  const handleEdit = () => {
-    onEdit(workout)
+  const handleSelectClick = () => {
+    console.log('handleSelectClick called for workout:', workout.id)
+    onSelect(workout.id)
   }
 
-  const handleEditChange = (e) => {
-    const { name, value } = e.target 
-    setEditData(prev => ({
-      ...prev,
-      [name]: value
-    }))
-  }
+  // check selected workout
+  const isViewing = selectedWorkout === workout.id
+  
+  // get exercises and sets per workout 
+  const totalExercises = workout.exercises.length
+  const totalSets = workout.exercises.reduce((sum, ex) => sum + ex.sets.length, 0)
 
-  const handleSaveEdit = (e) => {
-    e.preventDefault()
-    onUpdate(workout.id, editData)
-  }
-
-  const handleEditCancel = () => {
-    // reset form to original values
-    setEditData({
-      exerciseName: workout.exerciseName,
-      sets: workout.sets,
-      reps: workout.reps,
-      weight: workout.weight,
-      muscleGroup: workout.muscleGroup,
-      date: workout.date
-    })
-    onCancelEdit()
-  }
+  // get muscle groups hit during this workout
+  const muscleGroups = [...new Set(workout.exercises.map(ex => ex.muscleGroup))]
 
   return (
     <>
-    {isEditing && <div className='modal-overlay' onClick={handleEditCancel}></div>}
+    { isViewing && (
+      <>
+      <div className='modal-overlay' onClick={onClose}></div>
 
-    <div className={`workout-card ${isEditing ? 'editing-mode' : ''}`}>
-      {isEditing ? (
-        // edit form view 
-        <form onSubmit={handleSaveEdit} classname='edit-form'>
-          <h3>Edit Workout</h3>
+      <div className='workout-detail-modal'>
+        <div className='modal-header'>
+          <h2>{workout.date}</h2>
+          <button className='close-modal-btn' onClick={onClose}> X </button>
+        </div>
 
-          <div className='edit-form-group'>
-            <label htmlFor="edit-form-group">Exercise</label>
-            <input 
-              type="text"
-              id='edit-exerciseName'
-              name="exerciseName"
-              value={editData.exerciseName}
-              onChange={handleEditChange}
-              required
-            />
-          </div>
-
-          <div className='edit-form-row'>
-            <div className='edit-form-group'>
-              <label htmlFor="edit-sets">Sets</label>
-              <input 
-                type="number"
-                id="edit-sets"
-                name="sets"
-                value={editData.sets}
-                onChange={handleEditChange}
-                min="1"
-                required  
-              />
-            </div>
-
-            <div className="edit-form-group">
-              <label htmlFor="edit-reps">Reps</label>
-              <input 
-                type="number"
-                id="edit-reps"
-                name="reps"
-                value={editData.reps}
-                onChange={handleEditChange}
-                min="1"
-                required  
-              />
-            </div>
-
-            <div className="edit-form-group">
-              <label htmlFor="edit-weight">Weight (lbs)</label>
-              <input 
-                type="number" 
-                id="edit-weight" 
-                name="weight"
-                value={editData.weight}
-                onChnge={handleEditChange}
-                min="-100"
-                step="0.5"
-                required 
-              />
-            </div>
-          </div>
-
-          <div className="edit-form-group">
-            <label htmlFor="edit-muscleGroup">Muscle Group</label>
-            <select 
-              id="edit-muscleGroup"
-              name="muscleGroup"
-              value={editData.musclegroup}
-              onChange={handleEditChange}
-              required 
-            >
-              <option value="Chest">Chest</option>
-              <option value="Back">Back</option>
-              <option value="Legs">Legs</option>
-              <option value="Arms">Arms</option>
-              <option value="Core">Core</option>
-            </select>
-          </div>
-
-          <div className="edit-form-group">
-            <label htmlFor="edit-date">Date</label>
-            <input 
-              type="date"
-              id="edit-date"
-              name="date"
-              value={editData.date}
-              onChange={handleEditChange}
-              required 
-            />
-          </div>
-
-          <div className="edit-actions">
-            <button type="submit" className="save-btn">Save Changes</button>
-            <button type="submit" className="cancel-btn" onClick={handleEditCancel}>Cancel edit</button>
-          </div>
-        </form>
-      ) : (
-        // normal non-edit card view
-        <>
-          <div className="workout-card">
-            <div className='Workout-card-header'>
-              <h3>{workout.exerciseName}</h3>
-              <span className="badge">{workout.muscleGroup}</span>
-            </div>
-            
-            <div className='workout-card-body'>
-              <div className="stat">
-                <span className="stat-label">Sets</span>
-                <span className="stat-value">{workout.sets}</span>
-              </div>
-              
-              <div className="stat">
-                <span className="stat-label">Reps</span>
-                <span className="stat-value">{workout.reps}</span>
+        <div className='modal-content'>
+          {workout.exercises.map((exercise, index) => (
+            <div key={exercise.id} className='exercise-detail'>
+              <div className='exercise-header'>
+                <h3>{index + 1} | {exercise.exerciseName}</h3>
+                <span className='muscle-badge-small'>{exercise.muscleGroup}</span>
               </div>
 
-              <div className="stat">
-                <span className="stat-label">Weight</span>
-                <span className="stat-value">{workout.weight} lbs</span>
-              </div>
+              <table className='sets-table'>
+                <thead>
+                  <tr>
+                    <th>Set</th>
+                    <th>Reps</th>
+                    <th>Weight (lbs)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {exercise.sets.map(set => (
+                    <tr key={set.setNumber}>
+                      <td>{set.setNumber}</td>
+                      <td>{set.reps}</td>
+                      <td>{set.weight}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
+          ))}
+        </div>
 
-            <div className="workout-card-footer">
-              <span className="date">{workout.date}</span>
-            </div>
-            <div className='card-actions'>
-              <button className="edit-btn" onClick={handleEdit}>Edit</button>
-              <button className='delete-btn' onClick={handleDelete}>Delete</button>
-            </div>
+        <div className='modal-footer'>
+          <button className='edit-btn' onClick={handleEdit}>Edit</button>
+          <button className='delete-btn' onClick={handleDelete}>Delete</button>
+        </div>
+      </div>
+      </>
+    )}
+
+     {/* Card preview - displayed in list */}
+     <div className='workout-card' onClick={handleSelectClick}>
+      <div className='card-header'>
+        <h3>{workout.date}</h3>
+        <div className='muscle-badges'>
+          {muscleGroups.map(group => (
+            <span key={group} className='muscle-badge'>{group}</span>
+          ))}
+        </div>
+      </div>
+
+      <div className='workout-summary'>
+        <div className='summary-item'>
+          <span className='summary-label'>Exercises</span>
+          <span className='summary-value'>{totalExercises}</span>
+        </div>
+        <div className='summary-item'>
+          <span className='summary-label'>NUmber of Sets</span>
+          <span className='summary-value'>{totalSets}</span>
+        </div>
+      </div>
+
+      <div className='exercise-preview'>
+        {workout.exercises.map((ex, i) => (
+          <div key={ex.id} className='exercise-preview-item'>
+            {/* as list or bad cuz lost of generated <ul><li></li></ul>s ?*/}
+             {ex.exerciseName}
           </div>
-        </>
-      )}
-    </div>
+          ))}
+        </div>
+
+        <div className='card-action'>
+          <span>View Details</span>
+        </div>
+     </div>
     </>
   )
 }

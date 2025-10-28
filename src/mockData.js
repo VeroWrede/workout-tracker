@@ -1,93 +1,148 @@
-// Mock workout data for development
 export const mockWorkouts = [
   {
     id: 1,
-    exerciseName: "Bench Press",
-    sets: 4,
-    reps: 8,
-    weight: 185,
-    muscleGroup: "Chest",
-    date: "2025-01-05"
+    date: "2025-01-15",
+    exercises: [
+      {
+        id: 101,
+        exerciseName: "Bench Press",
+        muscleGroup: "Chest",
+        sets: [
+          { setNumber: 1, reps: 10, weight: 135 },
+          { setNumber: 2, reps: 8, weight: 145 },
+          { setNumber: 3, reps: 6, weight: 155 }
+        ]
+      },
+      {
+        id: 102,
+        exerciseName: "Incline Dumbbell Press",
+        muscleGroup: "Chest",
+        sets: [
+          { setNumber: 1, reps: 12, weight: 60 },
+          { setNumber: 2, reps: 10, weight: 65 },
+          { setNumber: 3, reps: 8, weight: 70 }
+        ]
+      },
+      {
+        id: 103,
+        exerciseName: "Cable Flyes",
+        muscleGroup: "Chest",
+        sets: [
+          { setNumber: 1, reps: 15, weight: 40 },
+          { setNumber: 2, reps: 12, weight: 45 }
+        ]
+      }
+    ]
   },
   {
     id: 2,
-    exerciseName: "Squats",
-    sets: 5,
-    reps: 5,
-    weight: 225,
-    muscleGroup: "Legs",
-    date: "2025-01-05"
+    date: "2025-01-13",
+    exercises: [
+      {
+        id: 201,
+        exerciseName: "Deadlift",
+        muscleGroup: "Back",
+        sets: [
+          { setNumber: 1, reps: 5, weight: 225 },
+          { setNumber: 2, reps: 5, weight: 245 },
+          { setNumber: 3, reps: 3, weight: 265 }
+        ]
+      },
+      {
+        id: 202,
+        exerciseName: "Pull-ups",
+        muscleGroup: "Back",
+        sets: [
+          { setNumber: 1, reps: 10, weight: 0 },
+          { setNumber: 2, reps: 8, weight: 0 },
+          { setNumber: 3, reps: 6, weight: 0 }
+        ]
+      }
+    ]
   },
   {
     id: 3,
-    exerciseName: "Deadlift",
-    sets: 3,
-    reps: 6,
-    weight: 315,
-    muscleGroup: "Back",
-    date: "2025-01-06"
+    date: "2025-01-11",
+    exercises: [
+      {
+        id: 301,
+        exerciseName: "Squat",
+        muscleGroup: "Legs",
+        sets: [
+          { setNumber: 1, reps: 10, weight: 185 },
+          { setNumber: 2, reps: 8, weight: 205 },
+          { setNumber: 3, reps: 6, weight: 225 }
+        ]
+      },
+      {
+        id: 302,
+        exerciseName: "Leg Press",
+        muscleGroup: "Legs",
+        sets: [
+          { setNumber: 1, reps: 12, weight: 270 },
+          { setNumber: 2, reps: 10, weight: 315 }
+        ]
+      },
+      {
+        id: 303,
+        exerciseName: "Leg Curls",
+        muscleGroup: "Legs",
+        sets: [
+          { setNumber: 1, reps: 15, weight: 90 },
+          { setNumber: 2, reps: 12, weight: 100 }
+        ]
+      }
+    ]
   },
   {
     id: 4,
-    exerciseName: "Overhead Press",
-    sets: 4,
-    reps: 10,
-    weight: 95,
-    muscleGroup: "Shoulders",
-    date: "2025-01-06"
+    date: "2025-01-09",
+    exercises: [
+      {
+        id: 401,
+        exerciseName: "Overhead Press",
+        muscleGroup: "Shoulders",
+        sets: [
+          { setNumber: 1, reps: 10, weight: 95 },
+          { setNumber: 2, reps: 8, weight: 105 },
+          { setNumber: 3, reps: 6, weight: 115 }
+        ]
+      },
+      {
+        id: 402,
+        exerciseName: "Lateral Raises",
+        muscleGroup: "Shoulders",
+        sets: [
+          { setNumber: 1, reps: 15, weight: 20 },
+          { setNumber: 2, reps: 12, weight: 25 }
+        ]
+      }
+    ]
   },
   {
     id: 5,
-    exerciseName: "Pull-ups",
-    sets: 3,
-    reps: 12,
-    weight: 0,
-    muscleGroup: "Back",
-    date: "2025-01-07"
-  },
-  {
-    id: 6,
-    exerciseName: "Bicep Curls",
-    sets: 3,
-    reps: 12,
-    weight: 35,
-    muscleGroup: "Arms",
-    date: "2025-01-07"
-  },
-  {
-    id: 7,
-    exerciseName: "Leg Press",
-    sets: 4,
-    reps: 12,
-    weight: 300,
-    muscleGroup: "Legs",
-    date: "2025-01-08"
-  },
-  {
-    id: 8,
-    exerciseName: "Plank",
-    sets: 3,
-    reps: 1,
-    weight: 0,
-    muscleGroup: "Core",
-    date: "2025-01-08"
-  },
-  {
-    id: 9,
-    exerciseName: "Incline Dumbbell Press",
-    sets: 3,
-    reps: 10,
-    weight: 70,
-    muscleGroup: "Chest",
-    date: "2025-01-09"
-  },
-  {
-    id: 10,
-    exerciseName: "Romanian Deadlift",
-    sets: 4,
-    reps: 8,
-    weight: 185,
-    muscleGroup: "Legs",
-    date: "2025-01-09"
+    date: "2025-01-07",
+    exercises: [
+      {
+        id: 501,
+        exerciseName: "Barbell Curls",
+        muscleGroup: "Arms",
+        sets: [
+          { setNumber: 1, reps: 12, weight: 60 },
+          { setNumber: 2, reps: 10, weight: 70 },
+          { setNumber: 3, reps: 8, weight: 75 }
+        ]
+      },
+      {
+        id: 502,
+        exerciseName: "Tricep Dips",
+        muscleGroup: "Arms",
+        sets: [
+          { setNumber: 1, reps: 15, weight: 0 },
+          { setNumber: 2, reps: 12, weight: 0 },
+          { setNumber: 3, reps: 10, weight: 0 }
+        ]
+      }
+    ]
   }
 ]

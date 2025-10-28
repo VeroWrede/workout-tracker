@@ -3,11 +3,11 @@ import './WorkoutList.css'
 
 function WorkoutList({ 
   workouts, 
-  onDeleteWorkout,
-  onEditWorkout,
-  editingWorkout,
-  onUpdateWorkout,
-  onCancelEdit
+  onDelete,
+  onSelect,
+  selectedWorkout,
+  onUpdate,
+  onClose
  }) {
   // check if there are workouts
   if(workouts.length === 0) {
@@ -26,11 +26,11 @@ function WorkoutList({
           <WorkoutCard 
             key={workout.id} 
             workout={workout} 
-            onDelete={onDeleteWorkout}
-            onEdit={onEditWorkout}
-            isEditing={editingWorkout?.id === workout.id}
-            onUpdate={onUpdateWorkout}
-            onCancelEdit={onCancelEdit}
+            onDelete={onDelete}
+            onSelect={onSelect}
+            selectedWorkout={selectedWorkout}
+            onUpdate={onUpdate}
+            onClose={onClose}
           />
         ))}
       </div>

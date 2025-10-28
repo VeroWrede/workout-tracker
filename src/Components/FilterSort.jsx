@@ -1,7 +1,11 @@
 import { useState } from "react"
 import './FilterSort.css'
 
-function FilterSort({ onFilterChange, onSortChange, workoutCount }) {
+function FilterSort({ 
+  onFilterChange, 
+  onSortChange, 
+  workoutCount }) 
+  {
   const [filters, setFilters] = useState({
     muscleGroup: 'All',
     // get newest first
